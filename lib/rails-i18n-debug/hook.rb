@@ -3,9 +3,10 @@ module I18n
     class Simple
       def lookup(locale, key, scope = [], options = {})
         init_translations unless initialized?
-        keys = I18n.normalize_keys(locale, key, scope, options[:separator])
 
-        i18n_logger.debug "I18N keys: #{keys}" if Rails.env.development?
+        keys = I18n.normalize_keys(locale, key, scope, options[:separator])
+        location = keys.map {|k| " #{k}:"}.join
+        i18n_logger.debug "I18N keys: #{location}" if Rails.env.development?
 
         keys.inject(translations) do |result, _key|
           _key = _key.to_sym
